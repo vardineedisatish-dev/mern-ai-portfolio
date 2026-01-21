@@ -1,1 +1,144 @@
 
+JavaScript Notes — Variables, Data Types & Operators
+
+🔹 Variables
+- Definition: Containers used to store values.
+- Ways to declare:
+  - const → value cannot be reassigned.
+  - let → value can be reassigned later.
+  - var → older way; function-scoped, hoisting issues.
+
+Hoisting
+- Declarations are moved to the top during compilation.
+- let and const are hoisted but not initialized → Temporal Dead Zone (TDZ).
+
+Example:
+console.log(x); // ReferenceError (TDZ)
+let x = 5;
+
+console.log(y); // undefined (var is initialized to undefined)
+var y = 10;
+
+Naming Rules
+- Must start with a letter, _, or $.
+- No spaces.
+- Use camelCase convention → totalAmount.
+
+🔹 Data Types
+
+1. Primitive Types
+- number → 10, 3.14
+- string → "hello", 'world', `Hi ${name}`
+- boolean → true, false
+- undefined → declared but not assigned
+- null → intentional “nothing”
+- bigint → large integers (123n)
+- symbol → unique identifiers (advanced)
+
+Examples:
+const price = 99.5;       // number
+const title = "Book";     // string
+const isAdmin = false;    // boolean
+let notSet;               // undefined
+const empty = null;       // null
+
+2. Non-Primitive Types
+- Object → { key: value }
+- Array → [1,2,3]
+- Function → function(){}, (x)=> x+1
+- Others → Date, Map, Set
+
+Examples:
+const user = { name: "asha" };
+const arr = [2,3,4];
+
+Type Checking:
+typeof 42;          // "number"
+typeof "hi";        // "string"
+typeof true;        // "boolean"
+typeof undefined;   // "undefined"
+typeof null;        // "object"
+Array.isArray([]);  // true
+
+🔹 Operators
+
+1. Arithmetic
++, -, *, /, %, **
+Example:
+console.log(10 + 5); // 15
+
+2. Assignment
+=, +=, -=, *=, /=
+Example:
+let x = 10;
+x += 5;  // 15
+
+3. Comparison
+==, ===, !=, !==, >, <, >=, <=
+Examples:
+console.log(10 > 5);     // true
+console.log(5 == "5");   // true (loose equality)
+console.log(5 === "5");  // false (strict equality)
+
+4. Logical
+&&, ||, !
+Examples:
+true && false;   // false
+true || false;   // true
+!true;           // false
+
+5. String Operators
+- .length → string length
+- .toUpperCase(), .toLowerCase()
+- .trim() → remove spaces
+- .charAt(index), .indexOf()
+- .slice(start,end)
+- .replace(old,new), .replaceAll()
+- .includes(), .startsWith(), .endsWith()
+- Concatenation → + or template literals
+- .split(separator) → string → array
+- .repeat(n)
+- .toString() → convert to string
+
+Examples:
+const name = "Satish";
+const msg = `Hello, ${name}!`; // template literal
+
+"hello".toUpperCase();          // "HELLO"
+" hi ".trim();                  // "hi"
+"javascript".includes("script");// true
+"abcde".slice(1,3);             // "bc"
+"1-2-3".split("-");             // ["1","2","3"]
+["a","b"].join(",");            // "a,b"
+
+6. Unary & Ternary
+
+Unary:
+++, --, typeof
+Examples:
+let x = 5;
+x++; // 6
+
+let y = 10;
+y--; // 9
+
+typeof "hello"; // "string"
+
+Ternary:
+Shortcut for if...else
+Syntax: condition ? valueIfTrue : valueIfFalse
+
+Example:
+let age = 18;
+let msg = age >= 18 ? "Adult" : "Minor";
+console.log(msg); // "Adult"
+
+🔹 Booleans, Truthy/Falsy & Decisions
+
+Falsy values: false, 0, "", null, undefined, NaN
+Truthy values: everything else (even "0", "false", [], {})
+
+Logical Operators Returning Values:
+"hello" && 123;     // 123 (AND returns last truthy)
+"" || "default";    // "default" (OR returns first truthy)
+null ?? "fallback"; // "fallback" (nullish coalescing)
