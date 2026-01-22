@@ -1,0 +1,159 @@
+1. What is a Function?
+----------------------
+- A function is a block of related code designed to perform a specific task.
+- Functions can accept arguments and return outputs.
+
+Example:
+
+function add(a, b) {
+    return a + b;
+}
+console.log(add(2, 3)); // Output: 5
+
+
+2. Ways to Define Functions
+---------------------------
+
+a. Function Declaration (Hoisted)
+- Can be used before its definition.
+- Commonly used for general utility functions.
+
+Example:
+
+function greet(name) {
+    return `Hello, ${name}`;
+}
+
+b. Function Expression (Not Hoisted)
+- Useful when assigning to variables or passing as arguments.
+
+Example:
+const greet = function(name) {
+    return `Hello, ${name}`;
+};
+
+c. Arrow Functions
+- Useful for short functions and callbacks.
+- Lexically binds `this` from the outer scope.
+
+Example:
+
+const greet = (name) => `Hello, ${name}`;
+
+3. Rest Parameters & Spread Syntax
+----------------------------------
+
+a. Rest Parameters
+- Allows a function to accept an indefinite number of arguments as an array.
+
+Example:
+
+function sum(...nums) {
+    return nums.reduce((a, n) => a + n, 0);
+}
+console.log(sum(1, 2, 3)); // Output: 6
+
+
+b. Spread Syntax
+- Unpacks arrays or objects into individual elements or properties.
+
+Example:
+
+const arr = [1, 2, 3];
+console.log(sum(...arr)); // Output: 6
+
+
+4. Higher-Order Functions (HOFs)
+-------------------------------
+- Functions that take other functions as arguments or return functions.
+
+Built-in HOFs: `map`, `filter`, `reduce`
+
+Custom HOF Example:
+
+function withLogging(fn) {
+    return (...args) => {
+        console.log(`Calling ${fn.name || 'anonymous'} with`, args);
+        const result = fn(...args);
+        console.log(`Result:`, result);
+        return result;
+    };
+}
+
+const add = (a, b) => a + b;
+const loggedAdd = withLogging(add);
+loggedAdd(10, 20);
+// Output:
+// Calling add with [10, 20]
+// Result: 30
+
+
+5. Closures
+-----------
+- A closure is when an inner function has access to variables from an outer function even after the outer function has finished executing.
+
+Example:
+function makeCounter(start = 0) {
+    let count = start;
+    return {
+        inc: () => ++count,
+        dec: () => --count,
+        value: () => count,
+    };
+}
+
+const c = makeCounter(10);
+c.inc();
+console.log(c.value()); // Output: 11
+
+
+6. The `this` Keyword
+---------------------
+
+a. Normal Functions:
+- `this` depends on how the function is called.
+
+b. Arrow Functions:
+- `this` is lexically bound (inherits from surrounding scope).
+
+Example:
+const user = {
+    name: 'Satish',
+    hello() {
+        return `Hi, ${this.name}`;
+    },
+    helloArrow: () => `Hi, ${this.name}`, // 'this' is from outer scope (likely undefined)
+};
+
+console.log(user.hello());       // Output: Hi, Satish
+console.log(user.helloArrow());  // Output: Hi, undefined
+
+7. Scope in JavaScript
+-----------------------
+
+- Scope determines where variables and functions are accessible.
+
+Types of Scope:
+- Global Scope: Accessible everywhere.
+- Function Scope: Variables declared with `var` inside a function.
+- Block Scope: Variables declared with `let` and `const` inside `{}` blocks.
+- Module Scope: Each ES module has its own scope.
+
+8. Scope Chain & Lexical Scope
+------------------------------
+- Inner functions can access variables from outer functions (closure).
+- If a variable is not found in the current scope, JavaScript looks up the scope chain.
+
+9. Shadowing
+------------
+- When an inner variable has the same name as an outer variable, it "shadows" the outer one.
+
+Example:
+
+let x = 10;
+function test() {
+    let x = 20;
+    console.log(x); // Output: 20
+}
+test();
+console.log(x); // Output: 10
