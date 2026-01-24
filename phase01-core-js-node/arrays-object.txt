@@ -1,0 +1,190 @@
+ARRAYS & OBJECTS:
+Arrays:
+An Array is a special variable used to store multiple values in one place.
+Key features:
+Stores values in ordered form
+Each value has an index starting from 0.
+Can store any data type(string, number, objects,functions)
+Arrays are dynamic(size can grow or shrink)
+Syntax:
+Let arr = [val1, val2, val3];
+Example:
+Let fruits – [“apple”, “banana”, “mango”];
+Accessing items:
+Console.log(fruits[0]);      // Apple
+Console.log(fruits[2]);      // Mango
+Common Array Methods:
+fruits.push(“orange);          // Add at end
+fruits.pop();                         // Removes last
+fruits.shift();                       // Removes first
+fruits.unshift(“grapes”);  // Add at start
+fruits.lengtth;                    // Number of items
+OBJECTS in JavaScript:
+An object stores data in the form of key-value pairs. It is used to represent real-world entities.
+Key Features:
+Data stored as property: value
+Keys are strings
+Values can be any data type(numbers, strings, arrays,functions)
+Syntax:
+Let obj ={
+Key1 : value1;
+Key2: value2
+}
+Example:
+Let student= {
+Name:  ”Arjun”,
+Age: 21,
+Course: “BCA”
+ };
+Accessing object properties:
+Console.log(student.name);         // Arjun
+Console.log(student[“age”]);       // 21
+Adding or changing values:
+Student.grade = “A”;             // Add
+Student.age =22;                   //update
+
+Map() – Transform each item (returns a new array)
+Use when: you want to convert each element to something else (same length output).
+Example:
+const nums=[1,2,3,4];
+ // square each number
+Const squares =nums.map(n => n*n);
+Console.log(squares);  //[1,4,9,16]
+// Extract a property from objects
+Const users =[
+{ id: 1, name: “Arjun”},
+{id:2, name: “meera”},
+];
+Const names= user.map(u => u.name);
+Console.log(names);             // [“Arjun”, “Meera”]
+With index and array
+const labeled = nums.map((n,i) => `#${i}: ${n}`);
+console.log(labeled);           // [“#0: 1”, #1: 2", "#2: 3", "#3: 4"]
+filter() – keep items that match a condition( returns a new array)
+use when: you want subset of items based on a test.
+Example:
+Const nums = [1,2,3,4,5,6];
+// Keep even numbers
+Const evens = nums.filter(n= > n%2 ==0);
+Console.log(evens);   // [2,4,6]
+Filter objects by property
+Const products =[
+{name: “phone”, instock: true},
+{name: “laptop”, instock: false},
+{name: “mouse”, instock: true}];
+const available =products.filter(p => p.instock);
+console.log(available);
+// [{name: “phone”, instock: true},{name: “Mouse”, instock: true}]
+reduce() – Accumulate to a single value(number, object, array, ect.)
+use when: you ant a summary or a transformation into one result.
+Sum numbers:
+const nums =[ 1,2,3,4];
+const sum= nums.reduce((acc,n) => acc+n,0);
+console.log(sum);    //10
+count occurrences
+const colors = ["red", "blue", "red", "green", "blue", "red"];
+
+const counts = colors.reduce((acc, c) => {
+  acc[c] = (acc[c] || 0) + 1;
+  return acc;
+}, {});
+
+console.log(counts); // { red: 3, blue: 2, green: 1 }
+
+Flatten an array of arrays:
+const nested = [[1, 2], [3, 4], [5]];
+const flat = nested.reduce((acc, arr) => acc.concat(arr), []);
+console.log(flat); // [1, 2, 3, 4, 5]
+// (Modern alternative) nested.flat(); // [1, 2, 3, 4, 5]
+
+Group by a key:
+
+const people = [
+  { name: "Asha", city: "Kochi" },
+  { name: "Vikram", city: "Chennai" },
+  { name: "Meera", city: "Kochi" },
+];
+
+const byCity = people.reduce((acc, p) => {
+  (acc[p.city] ||= []).push(p);
+  return acc;
+}, {});
+
+console.log(byCity);
+// {
+//   Kochi:  [{ name: "Asha", city: "Kochi" }, { name: "Meera", city: "Kochi" }],
+//   Chennai:[{ name: "Vikram", city: "Chennai" }]
+// }
+
+Ex.1 Normalize & deduplicate user emails
+
+const emails = ["User@Example.com", "user@example.com", "admin@site.com"];
+
+const unique = [...new Set(emails.map(e => e.trim().toLowerCase()))];
+console.log(unique); // ["user@example.com", "admin@site.com"]
+
+Ex.2 Get top N scores(sorted desc)
+const scores = [45, 99, 72, 88, 99, 60];
+
+const top3 = scores
+  .slice()                  // avoid mutating original
+  .sort((a, b) => b - a)
+  .slice(0, 3);
+
+console.log(top3); // [99, 99, 88]
+Ex: Average rating
+const ratings= [4,5,3,4,5];
+const avg =
+           ratings.reduce((sum,r) => sum+r,0)/ratings.length;
+console.log(avg);
+
+Destructuring:
+
+Destructuring is a concise syntax to unpack values from arrays and extract properties from objects into variables.
+Array destructuring  - by position
+Object destructuring – by property name
+
+Array destructuring:
+
+const arr =[10,20,30];
+const [a,b,c] = arr;
+console.log(a,b,c);       // 10 20 30
+
+skip items:
+
+const numbers = [1,2,3,4]
+const [first, , third] = number;
+console.log(first, third);  // 1 3
+
+Default values
+Const [x=0,y=0,z=0] = [5, , 7];
+Console.log(x,y,z);   // 5 0 7
+Rest element
+const [head, …tail] =[1,2,3,4]
+console.log(head);    // 1
+console.log(tail);      // [2,3,4]
+swap variables(no temp var)
+let a1=5, b1=9
+[a1,b1]=[b1,a1];
+Console.log(a1, b1);   // 9 5
+Object Destructuring
+Const user ={ id: 7, name: “asha”, role: “admin”};
+Const {name, id} =user;
+Console.log(name, id);      // Asha 7
+Rename variables
+Const { name: fullName, role:userRole)= user;
+Console.log(fukkName, userRole);  // Asha admin
+Default values
+const opts = {theme : “dark”};
+const { theme =”light”, layout=”grid”}=opts;
+console.log(theme, layout);    // dark grid
+Rest properties
+const person ={ fname:”Arjun”, age: 21, city: “kochi”};
+const {fname, …rest} =person;
+console.log(fname);   // Arjun
+console.log(rest);      // {age: 21, city: “kochi”}
+compound property name
+const key=”title”;
+const book ={title: “JS guide”, pages: 200};
+const{[key]: t} = book;
+console.log(t);     // JS guide
