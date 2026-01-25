@@ -17,7 +17,7 @@ function addItem(id,qtn){
 }
 
 function removeItem(id){
-    orders=orders.filter(o=>o.id==id);
+    orders=orders.filter(o=>o.id!=id);
     console.log("item removed successfully");
 }
 function totalBill(){
