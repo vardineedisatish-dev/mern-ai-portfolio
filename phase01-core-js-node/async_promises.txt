@@ -1,0 +1,150 @@
+ASYNC & PROMISES IN JAVASCRIPT
+Async:
+JavaScript runs in a single thread- it can do only one thing at a time.
+But in real applications, we need to do tasks that take time, like
+Fetching data from API
+Read/write files
+Wait for timers
+Database queries
+Heavy computations
+If JS waited for each task to finish, everything would freeze.
+So JavaScript uses asynchronous programming.
+Synchronous vs Asynchronous (Quick Example)
+Synchronous(Blocking)
+Console.log(“start”);
+Console.log(“middle”);
+Console.log(“end”);
+Output:
+Start
+Middle
+End
+Asynchronous(Non-blocking)
+Console.log(“start”);
+SetTimeout(()=> {
+console.log(“middle”);
+},2000);
+Console.log(“end”);
+Output:
+Start
+End
+Middle
+Promise
+A promise represents a value that will be available in the future.
+A promise has 3 states:
+1.	pending- still working
+2.	Fulfilled – success
+3.	Rejected - failure
+Creating a promise:
+Const mypromise = new promise((resolve, reject) =>{
+let success=true;
+if (success){
+resolve(“operation successful”);
+}
+else{
+reject(“operation failed”);
+}
+});
+Resolve() success
+Reject() error
+
+Consuming a promise
+mypromise.then(result => {
+console.log(result);
+}).catch(error => {
+Console.log(error);
+});
+Example (API Simulation)
+Function fetchData(){
+return new promise((resolve, reject) => {
+setTimeout() => {
+resolve(“Data Received”);
+}, 2000);
+});
+}
+fetchData().then(data => console.log(data))
+                   .catch(err => console.log(err));
+Output:
+Data received
+Promise Chaining:
+fetchData().then(data => {
+console.log(data);
+return “processed data”;
+}).then(processed =>{
+console.log(processed);
+}).catch(err => console.log(err));
+Each .then() waits for the previous one
+Problems with promises
+Hard to read when chained deeply
+Looks like nested logic
+Error handling become messy
+Async/await:
+Async/await is modern way to handle promises.
+Easier to read
+Easier error handling
+Cleaner code
+Async keyword
+When you add async to a function:
+It always returns a promise
+Async function hello(){
+return  “hello world”;
+}
+hello().then(msg => console.log(msg));
+await keyword
+await pauses execution until the promise resolves
+async function getData(){
+const dat =await fetchData();
+console.log(data);
+}
+getData();
+javascript waits here but does not block the main thread
+promise vs async/await
+using promise
+fetchData().then(data=> console.log(data))
+                   .catch(err => console.log(err));
+Using async/await (cleaner)
+Async function getData(){
+Const data= await fetchData();
+Console.log(data);
+}catch(error){
+Console.log(error);
+}
+}
+GetData();
+Error Handling in async/await
+async function example() {
+try { 
+const result = await fetchData();
+console.log(result);
+}catch (error) {
+Console.log(“error: “, error);
+}
+}
+Event Loop :
+The event loop is a mechanism in JavaScript that enables asynchronous and non-blocking execution even through JavaScript is single-threaded.
+It continuously checks whether the call stack is empty and if it is moves pending tasks from the queues into the call stack for execution.
+Execution order:
+Run all synchronous code.
+Execute all microtasks(promises).
+Execute one macrotask(setTimeout,events).
+Repeat.
+Example:
+console.log(“1. Sync: start”);
+// macrotask(callback queue)
+SetTimeout(()=> {
+Console.log(“5. Macrotask: set Timeout(0ms)”);
+},0);
+// microtask (microtask queue)
+Promise.resolve()
+   .then(()=>
+Console.log(“3 microtask: promise then #1”);
+).then(()=>{
+Console.log(“4. Microtask: promise then #2”);
+});
+Console.log(“2. Sync: end”);
+Expected output:
+1.	Sync:start
+2.	Sync : end
+3.	Microtask: promise then #1
+4.	Microtask: promise then #2
+5.	Macrotask: setTTimeout(0ms)
+
