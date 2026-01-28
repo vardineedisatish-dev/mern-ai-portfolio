@@ -1,0 +1,101 @@
+Node.js:
+Node.js is a javascript runtime environment that allows you to run javascript outside the browser, typically on a server or local machine.
+Built on Google chromes v8 JavaScript engine
+Used for backend development, APIs, micro services,  and more
+Enable server-side javascript
+
+Why Node.js Exists:
+
+Node.js was created to solve a common problem in web servers: Traditionalservers blocks while waiting for I/O operations
+
+Node.js uses:
+Non-blocking I/O
+Event-driven architecture
+Single-threaded execution
+
+Node.js Runtime Architecture
+JavaScript Code
+           ↓
+ V8 JavaScript Engine 
+           ↓
+ Node.js APIs (fs, http, crypto, timers) 
+           ↓
+ libuv (Event Loop, Thread Pool)
+           ↓ 
+Operating System
+
+V8 JavaScript Engine
+Developed by Google
+Compiles JavaScript directly to machine code
+Very fast execution
+
+Used by:
+Node.js
+Google chrome
+
+The event loop
+Node.js runs on a single main thread, but it can handle thousands of requests using the Event Loop.
+Event Loop Phases(simplified)
+Timers -SetTimeout, setInterval
+I/O callbacks
+Idle / Prepare
+Poll- fetch new I/O events
+Check –setImmediate
+Closes callbacks
+CPU- intensive tasks block the event loop-avoid them
+Non-Blocking(Asynchronous)I/O
+Instead of waiting for tasks to complete, Node.js continues execution.
+Blocking example:
+const  data =fs.readFileSync(“File.txt”);
+console.log(data);
+Non-Blocking Example:
+fs.readFile(“file.txt”, (err, data) => {
+Console.log(data);
+});
+Node.js Thread pool:
+Although JavaScript runs on a single thread, Node.js uses a Thread pool(libuv) for:
+File system operations
+DNS lookups
+Compression
+Crypto operations
+Default thread pool size: 4
+UV_THREADPOOL_SIZE=8 node app.js
+
+Node.js Global Objects:
+Available everywhere (no import needed):
+Console
+Process
+_dirname
+_filename
+setTimeout
+setInterval
+Buffer
+Ex:
+Console.log(process.env.NODE_ENV);
+Node.js Modules:
+Node.js follows the CommonJS and ES Modules system.
+Common JS
+const fs= require(“fs);
+module.exports = myFunction;
+ES Modules
+import fs from “fs”;
+export default myFunction;
+Built-In Node.js Modules
+Fs – file system
+http – create HTTP SERVERS
+Path – file paths
+Os – os info
+url – url parsing
+crypto – encryption
+events – event handling
+example: 
+const http = require(“http”);
+http.createServer((req, res) =>  {
+res.end(“hello node.js”);
+}).listen(3000);
+
+Process & environment:
+The process object gives run time info:
+console.log(process.pid);
+console.log(process.argv);
+console.log(process.memoryUssage());
