@@ -1,1 +1,58 @@
+Static file serving:
+A static file is a file that the server sends as it is, without changing it.
+Examples:
+Index.html
+Style.css
+Scripts.js
+Image like .png  .jpg
+These files do not depend on user data or backend logic.
+Static file serving means: “when a browser requests a file, the server returns that file from disk.” The server maps a URL (like /index.html) to a file on disk and responds with the files content and the correct HTTP headers, notably:
+Status codes: 200 ok for success, 404 Not found when a file isn’t present.
+Content-Type: Tells the browser how to interpret the file (e.g. text/html for .html).
+Example:
+Browser -> GET/index.html
+Server -> sends index.html file
+This how website load:
+First -> index.html
+Then -> CSS, JavaScript, images
+HTTP is a request-response protocol:
+Task: serve index.html, handle 404
+Project structure
+my-site/
+ public/
+     index.html
+     server.js
+public/index.html
+<! doctype html>
+<html>
+   <head>
+      <meta charset=”utf-8” />
+      <title>My Site</title>
+      </head>
+<body>
+   <h1>Hello from index.html</h1>
+</body>
+</html>
+Server.js
+// install: npm init –y && npm i express
+const express=require(“express”);
+const path=require(“path”);
+const app= express();
+const PORT = process.env.PORT || 3000;
+// serve everything under /public as static
+app.use(express.static(path.join(_dirname, “public”)));
+// explicit route for root-> index.html 
+app.get(“/”, (req,res)=>{
+   res.sendFile(path.join(_dirname, “public”, “index.html”));
+});
+// 404 handler (must come after all other routes and static middleware)
+app.use((req,res)=> {
+res.status(404).type{“text/plain”}.send(“404 Not Found”);
+});
+App.listen(PORT, ()=>{
+     Console.log(`server running at http://localhist:${PORT}`);
+});
+Response
+Get/ or GET/index.html => serves public/index.html with 200 ok.
+GET/missing => matches no file/ route => hits the 404 middleware => returns 404 Not Found.
 
