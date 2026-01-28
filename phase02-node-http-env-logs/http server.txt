@@ -1,1 +1,20 @@
-
+HTTP server in Node.js
+An HTTP server in Node.js is a program that listens for HTTP requests from clients (like browsers) and send back HTTP responses. Node.js provides a built-in http module to create such servers without any external libraries.
+Key points:
+It uses an event driven, non-blocking I/O model, making it efficient and scalable.
+The server handles requests asynchronously, so it can manage many clients at the same time.
+Commonly used to build web applications, REST APIs and microservices.
+Basic flow:
+Client sends HTTP request (URL, method, headers).
+Node.js server receives the request.
+Server processes it and sends an HTTP response (status code, headers, body).
+Simple example:
+const http = require(‘http’);
+const server = http.createServer((req,re) =>{
+     res.writeHead(200, { ‘Content-Type’ : ‘text/plain’ });
+res.end(‘Hello, World’);
+});
+Server.listen(3000, ()=>{
+Console.log(‘server running on port 3000’);
+});
+This creates an HTTP server that responds with “Hello, World” when accessed at http: //localhost: 3000.
