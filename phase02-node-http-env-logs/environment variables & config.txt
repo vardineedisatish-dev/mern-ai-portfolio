@@ -1,0 +1,74 @@
+Environment variables:
+Environment variables are key-value pairs stored outside your code, used to configure your application.
+Example environment variables:
+PORT = 3000
+DB_URL= mongodb : //localhost : 27017/mydb
+API_KEY =abcd1234
+Why not put config directly in the code?
+
+Hard-coding values like:
+Const PORT=3000;
+Creates problems because:
+You cant change values without editing the code.
+Different environments(dev, testing, production) need different settings.
+It exposes secrets (API keys, passwords) inside source code.
+Process.env:
+Process.env is an object containing all environment variables.
+const port = process.env.PORT;
+const db= process.env.DB_URL;
+Why environment variables matter.
+1.security:
+Never put your sensitive data in code. Environment variables keep them out of repo.
+2.flexibility:
+Same code=> different behaviour depending on environment.
+•	Local machine
+•	Cloud service
+•	Testing pipeline
+•	Production server
+3.Cloud Friendly
+All cloud platforms use environment variables for configuration.
+12- Factor App-Config
+The 12- Factor App methodology is a set of best practices for building maintainable, scalable apps.
+The Config section says:
+“store configuration in the environment.”
+Task: use .env for port and Config:
+We’ll use the popular dotenv package to load environment variables from a .env file.
+Step 1 : install dotenv
+npm install dotenv
+step 2: create a .env file:
+create a file named .env in project root
+PORT 3000
+APP_NAME=MyNodeApp
+Note: never commit.env to GitHub.
+Add it to .gitignore.
+Step 3: Load .env in your Node.js app
+require(“dotenv”).config();
+This reads .env and loads all variables into process .env.
+Step -4: use the variables in your code
+Server.js:
+require(“dotenv”).config(); // load variables from .env
+const express = require(“express”);
+const app = express();
+// Read port from environment (fallback to 300 if missing)
+const PORT = process.env.PORT || 3000;
+app.get(“/”, (req, res) => {
+res.send(`welcome to ${process.env.APP_NAME}`);
+});
+app.listen(PORT, ()=> {
+  console.log(`server running on port ${PORT}`);
+});
+Checkpoint:
+Test 1: checking with .env
+Node server.js
+Expected output:
+Server running on port 4000
+Because PORT=4000 is coming from .env.
+Test 2: override with environment variable
+PORT =5000 node server.js
+Expected output:
+Server running on port 5000
+Key points
+App reads config from environment
+.env is used by default.
+Real environment variables override .env.
+
