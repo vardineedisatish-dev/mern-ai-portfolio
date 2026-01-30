@@ -9,7 +9,7 @@ try{
     }
 
     const data= await response.json();
-    console.log("Data received",data);
+    console.log("Data has been received",data);
 }
 catch(error)
 {
