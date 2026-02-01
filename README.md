@@ -30,7 +30,7 @@ This repository documents my structured journey to becoming a **Fullstack MERN +
 
 ### Phase 2 — Express.js & REST APIs
 - **Concepts:** Routing, Middleware, CRUD, Validation, Swagger docs  
-- **Deliverables:** `/api/notes` CRUD, Zod/Joi validation, Swagger UI  
+- **Deliverables:** /api/notes CRUD, Zod/Joi validation, Swagger UI  
 - **Checkpoints:** CRUD tested via Postman, invalid requests rejected, docs render
 
 ---
