@@ -1,0 +1,90 @@
+Manual Routing in node.js
+Routing:
+Routing decides how your server responds to different URLs(paths) and HTTP methods.
+Example: 
+    GET /health -> return server health.
+    GET/time -> return current time.
+Manual routing : you implement the path/method checks yourself(no express).
+Core modules:
+HTTP: creates the server and handles requests/responses.
+URL (WHATWG API): parses incoming request URLs into parts like .pathname and .searchparms.
+ URL Parsing
+Pathname -> e.g. /time
+Search/searchParams ->eg. ?format=iso,
+url.searchParms.get(‘format’)
+ex.
+const url=new URL(req.url, `http: //${req.headers.host || ‘localhost’}`);
+const path =url.pathname;  // ‘/health’ or ‘/time’
+normalize trailing slash
+const normalized=path.length >1 && path.endsWith(‘/`)  ? path.slice(0,-1) : path;
+JSON Responses:
+Always send valid JSON using JSON.stringify(data).
+Set headers:
+    Content-Type: application/json; charset=utf-8
+Optionally: cashe-control: no-store for dynamic data like time.
+Send the body using res.end(body) once.
+Ex:
+function sendJson(res,status,data, header={}){
+ const body=JSON.stringify(data);
+res.writeHead(status, {
+‘Content-Type’: ‘application/json; charset=utf-8’,
+‘Content-Length’: Buffer.byteLength(body),
+…headers,
+});
+res.end(body);
+}
+HTTP Status codes:
+200 ok – successful response
+404 Not Found – unmatched route.
+405 Method Not Allowed – wrong HTTP method; include Allow header.
+500 Internal Server Error – unexpected errors (don’t leak stack traces).
+Manual Router example:
+// server.js
+const http=require(‘http’);
+function parseUrl(req) {
+     return new URL(req.url, `http: //${req.headers.host || ‘localhost’}`);
+}
+function json(res, status, data, extra={}){
+const body =JSON.stringify(data);
+res.writeHead(status, {
+‘Content-Type’: ‘application/json; charset=utf-8’,
+‘Cache-Length’: Buffer.byteLength(body),
+‘Cache-Control’: ‘no-store’,
+…extra,
+});
+Res.end(body);
+}
+cons server =http.createServer(req,res) =>{
+try {
+    const method= req.method || ‘GET’;
+    const url= parseUrl(req);
+let path = url.pathname;
+if(path.length >1 && path.endsWith(‘/’)) path =path.slice(0, -1);
+// only GET supported for these routes
+const allow = [‘GET’];
+const ensureGet= () => method ===’GET’ ? null : json(res,405,
+{ error: ‘Method Not Allowed’, allow}, {‘Allow’ : allow.join(‘, ’)});
+   // Route : /health
+   If (path === ‘/health’){
+            If (ensureGet()) return;
+             Return json(res, 200, {status: ‘ok’, uptimeSec: process.uptime(), pid : process.pid});
+             }
+  // Route: /time
+ If(path ===’/time’){
+  If (ensureGet()) return;
+  const now =new Date();
+ return json(res, 200, {
+iso: now.toISOString(),
+epochMs: now.getTime(),
+utcOffsetMinutes: -now.getTimezoneOffser(),
+});
+}
+// 404 fallback
+   Return json (res, 404, {error: ‘Not Found’});
+}catch(err){
+Console.error(“unlabelled error”,err);
+Return json(res,500,{error: “internal server error”});
+}
+});
+Const PORT = process.env.PORT || 3000;
+Server.listen(PORT, () => console.log(`Server at http://localhost: ${PORT}`));
