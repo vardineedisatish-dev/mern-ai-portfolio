@@ -1,0 +1,125 @@
+Unit test:
+Unit tests are small tests that check whether a single unit of code (usually a function) works correctly.
+Why unit tests?
+catch bugs early
+Male code safer to refractor
+Improve confidence in your code
+Work great in C/CD pipelines (automated testing)
+Jest:
+Jest is a JavaScript testing framework commonly used with:
+JavaScript
+Typescript
+React apps
+Node.js projects
+Features:
+Very easy to set up
+Provides test runner, assertions, and mocking
+Snapshot testing (especially for React)
+Fast and widely used in frontend & backend JS.
+Installing jest
+npm install – save-dev jest
+Add to package.json:
+{
+“scripts”: {
+“test” : “jest”
+}
+}
+Run tests: 
+  npm test
+Basic Structure of a Jest Test
+A test has three common parts:
+1.	Arrange -> set up data
+2.	Act -> call the function
+3.	Assert -> check the result
+Simple example:
+// math.js
+function(a,b){
+return a+b;
+}
+module.exports =add;
+Test file: math.tsest.js
+const add =require(‘./math’);
+test(‘adds 2+3 =5’, ()=> {
+expect (add(2,3)).tpBe(5);
+});
+Run:
+npm test
+If the function returns 5 -> test passes
+Otherwise -> test fails
+Important Jest Functions
+1.test() or it()
+Defines a single test
+test(‘description’, () => {});
+2.expect()
+Used for writing assertions.
+Cmmon matchers:
+toBe() – Exact value match(numbers, strings)
+toEqual() – Deep equality(objects, arrays)
+toBeTruthy()/toBeFalsy() – truthiness checks
+toContain() – for arrays/strings
+toThrow() – Test errors
+Example:
+expect((5).toBe(5);
+expect([1,2,3]).toContain(2);
+expect(() => { throw new Error() }).toThrow();
+Testing Asynchronous Code:
+Using async/await:
+test(‘async example’, async () => {
+const result=await fetchData();
+expect(result).toBe(‘done’);
+});
+Using promises:
+test (‘returns data’, () => {
+ return fetchData().then(data => 
+   expect(data).toBe(‘done’)
+);
+});
+BeforeEach and afterEach
+Used 
+BeforeEach(()=> {
+console.log(‘setting up before each test’);
+});
+AfterEach(() => {
+Console.log(‘cleaning up after each test’);
+});
+Mocking in Jest
+Mocking helps In
+Replace actual functions
+Simulate APIs, databases, timers
+Example:
+const mckFn = jest.fn();
+mockFn.mockReturnValue(10);
+expect(mockFn()).toBe(10);
+Mocking modules:
+Jest.mock(‘./api’);
+Snapshot testing
+Expect(component).toMatchSnapshot();
+Jest saves a reference snapshot and compares it next time.
+Test File Naming Conventions:
+*.test.js
+*.spec.js
+Inside a_tests_folder
+Jest automatically detects them.
+Best practices for unit Testing
+Test one thing per test
+Use meaningful test names
+Avoid testing complex logic in one test
+Use mocks to avoid external dependencies
+Keep tests isolated from each other
+Example:
+Function:
+Function isAudult(age){
+return age>= 18;
+}
+Module.exports =  isAdult;
+Test:
+Const isAdult = require(‘./isAudult’);
+Describe(‘isAdult function’, ()=>{
+Test(‘returns true for age >=18’ , () => {
+  Expect(isAudult(20)).toBe(true);
+});
+Test(‘returns false for age <18’, ()=>{
+Expect(isAdult(16).toBe(false);
+});
+});
+
