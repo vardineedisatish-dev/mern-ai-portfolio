@@ -1,1 +1,52 @@
+API Docs (API Documentation):
+API Documentation is a detailed manual that explains how to use an API. It is written for developers and includes everything needed to understand how the API works.
+API Docs usually contain:
+Base URL:
+The main address of the API.
+Endpoints:
+Specific routes for actions like: 
+/users
+/login
+/orders/{id}
+Methods (HTTP Verbs)
+GET -> Read data
+POST -> Send/Insert data
+PUT -> Update data
+DELETE -> Remove data
+Headers:
+Like Authorization: Bearer <token>
+Body/ Payload (for POST/PUT)
+JSON format data to send.
+Sample requests & responses
+Error Codes
+Example:
+400 -> Bad Request
+401 – Unauthorized
+Purpose of API Docs
+Explain what the API can do.
+Guide developers on how to call the API.
+Ensure correct usage of endpoints.
 
+Postman
+Postman is a popular tool used to test APIs without writing code. It provides a simple interface to send API requests and view responses.
+It can be used to:
+Send requests (GET, POST, PUT, DELETE)
+Add headers, params, or body
+View response JSON
+Test authentication (API keys, tokens)
+Save requests in collections
+Automate tests or workflows
+Share API calls with a team
+Example:
+API Docs say:
+POST http: // api.example.com/login
+Body:
+{
+“username” : “test”,
+“Password” : “1234”
+}
+In postman:
+Choose POST
+Enter the URL
+And body (raw > JSON)
+SEND
