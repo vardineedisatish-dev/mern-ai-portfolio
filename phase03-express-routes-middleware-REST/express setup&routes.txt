@@ -1,0 +1,99 @@
+Express: Express is a minimal and flexible web application frame work that provides a robust set of futures for building web application and mobile application.
+Express helps us: 
+Handle requests ( GET, POST,PUT,DELETE)
+Organize code
+Connect to frontend(React)
+Build  API faster
+Creating simple express server
+1.Create a folder
+mkdir express-learning
+cd express-learning
+2. start project
+npm init –y
+3.install Express
+npm install express
+4.create server.js file
+const express=require(“express”);
+const app= express();
+app.get(“/”, (req,res)=>{
+res.send(“Hello Express!”);
+});
+App.listen(3000, () => {
+Console.log(“server running on port 3000”);
+});
+5.run server
+node server.js
+server is running at http://localhost:3000
+
+Routes: Routes define how an application responding to a request to a particular end point.
+Example:
+/ -> homepage
+/users -> user data
+/products -> products list
+Basic route
+app.get(“/users”, (req, res) => {
+      res.send(“user list”);
+});
+
+Routers: Routers help you organize your code by splitting routes into small files.
+Example:
+If we don’t want all routes in one big file. Instead, ae a file for each feature.
+routes/
+users.js
+products.js
+
+Setting up a router
+1.create folder
+mkdir  routes
+2.create routes/users.js
+const express = require (“express”);
+const router = express.Router();
+router.get(“/”, (req,res) => {
+res.send(“All users”);
+});
+router.post(“/”, (req, res) => {
+    res.send(“user created”);
+});
+module.exports = router;
+3.Use in main server (server.js)
+const express= require(“express”);
+const app = express();
+const userRoutes = require(“ ./routes/users”);
+app.use(“/users”, userRoutes);
+app.listen(3000, ()=>{
+       console.log(“server running on 3000”);
+});
+Now test:
+GET/users -> “All users”
+POST/ users -> “User Created’
+HTTP Methods:
+GET   ->   /users     -> Fetch data
+POST ->   /Users    ->create data
+PUT   ->   /users/:id   -> update(replace)
+PATCH -> /users/:id   -> update (partial)
+DELETE -> /users/:id   -> Delete
+Example:
+router.get(“/:id”, (req,res) => {
+       res.send(“Get user by ID”);
+});
+
+CRUD operations:
+//routes/users.js
+const express=require(“express”);
+const router =express. Router();
+router.get(“/”, (req, res) =>{
+       res.send (“Get all users”);
+});
+router.get(“/:id, (req, res) => { 
+       res.send(“Get user “ +req.params.id);
+});
+router.post(“/”, (req,res) =>{
+      Res.send(“ Create new user”);
+});
+router.put(“/:id”, (req, res) =>{
+     res.send(“Update user “+req.params.id);
+});
+router.delete(“/:id, (req, res) =>{
+    res.send(“Delete user “ +req.params.id);
+});
+module.exports =router;
