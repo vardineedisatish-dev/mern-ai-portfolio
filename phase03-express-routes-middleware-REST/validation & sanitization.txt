@@ -1,0 +1,74 @@
+Validation & Sanitization
+When you build APIs, you receive data from users.
+But users can send:
+Wong data
+Missing data
+Wrong data type
+Malicious data (scripts, attacks)
+So our back end must be protect itself.
+This protection have two steps:
+Validation: checks the data is correct
+Validation ensures the data:
+Exists
+Is of the correct type
+Has the right length
+Follows rules you define.
+Examples of validation
+Name        required                             “Satish”
+Email        must be valid email             test@gmail.com
+Age            must be a number              23
+Password   minimum 6 chars                “123456”
+Title             cannot be empty                “My note”
+      
+Example 1: manual validation
+If(!req.body.name) {
+return res.status(400).json({message: “Name is required”});
+}
+If (typeof req.body.name !== “string”){
+   return res.status(400).json{message : “Nmae must be a string”});
+}
+Example 2: validate email
+const email = req.body.email;
+if (!email || email.includes(“@”)){
+return res.status(400).json({message: “Invalid email”});
+}
+Validation helps:
+Protect database
+Prevents crashes
+Helps users send correct data
+Filter out broken or harmful data
+Sanitization:
+Clean the data so it becomes safe.
+Sanitization removes:
+Extra spaces
+Unsafe characters
+HTML tags
+Javascript code
+SQL or XSS attacks
+Examples of sanitization:
+“ Satish “               “Satish”
+“<script>alert(‘hack’)</script>”         “alert(‘hack’)”
+“Hello<b>world</b>”                “Hello world”
+
+Sanitization examples(express):
+Trim input:
+    req.body.title = req.body.title.trim();
+Remove HTML tags
+Req.body.descriptiom=req.body.description.replace(/<[^.}*>?/gm, ‘’);
+Convert type safely
+Req.body.age=Number(req.ody.age);
+Library( express validator):
+Handles both validation and sanitization
+Install:
+Npm install express-validator
+Example:
+Const {body} =require(“express-validator);
+Router.post(
+“/register”,
+[
+body(“email”).isEmail().withMessage(“Invalid email”),
+body(“name”).isLength({ min : 3}).trim();
+body(“password”).isLength({min: 6})
+]
+Controller.register
+);
