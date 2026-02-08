@@ -1,0 +1,72 @@
+Pagination & filtering:
+Filtering: search for specific data
+Pagination: Break large data into pages instead of sending everything at once.
+These are usually controls using query parameters such as:
+?page=2&limit=10&q=apple
+Query parameters:
+Query parameters are the text after the ? symbol in a URL.
+Example: /products?page=2&limit=5&shoes
+To read them in backend express:
+req.qurey.page
+req.qurey.limit
+req.qurey.q
+understanding each query parameter
+page:
+represents which page of data you want
+page=1 -> first page
+page=2  -> second page
+page=3  -> third page
+if not provided, backend normally sets a default
+const page= Number(req.qurey.page) || 1;
+Limit:
+Representing how many items to show per page.
+Examples:
+Limit=5 ->show 5 items
+Limit=20 -> show 20 items
+If not provided
+const limit =Number(req.qurey.limit) ||10;
+q(filtering or searching):
+q usually for query/search term.
+Examples:
+?q=shoes
+?q=laptop
+?q=blues jeans
+Internal working of pagination:
+Formula: skip =(page-1) * limit
+Example: ?page:3&limit=10
+Skip =(3-1) *10=20
+So backend returns:
+Items 21-30
+Example : building a simple Express Route(conceptual)
+app.get(‘/products’, async(req,res) => {
+//1.convert page & limit to numbers, set defaults
+Const page =Number(req.qurey.page) || 1;
+Const limit – Number(req.qurey.limit) || 10;
+Const search =req.qurey.q || “”;
+Const skip =(page-1) * limit;
+//2.filtering condition (example with MongoDB)
+Const filter = search
+    ? {name: {$regex : serach, $options : “I”} }
+      : {};
+
+//3. Fetch from database
+Const results = await product. Find(filter)
+           .skip(skip)
+           .limit(limit);
+// 4.const total = await product,countDocuments(filter);
+//5. Respond with paginated data
+Res.json({
+Page,
+Limit,
+Total,
+Totalpages: math.ceil(total/limit),
+Data: results
+});
+});
+What happens when we use URLSearchParams?
+Althrough express parses queries automatically, URLSearchParams gives insight into how query string work.
+Example:
+const parms =new URLSearchParms(“?page=3 & limit=10 &q=apple”);
+params.get(“page”);         // “3”
+parms.get(“limit”);           // “10”
+params.get(“q”);              //  “apple”
