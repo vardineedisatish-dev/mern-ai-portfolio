@@ -1,0 +1,53 @@
+API: API stands for application programming interface is a set of rules or protocols that enables software applications to communicate with each other to exchange data, features and functionality.
+Example: mobile app communicates to a server using an API like:
+GET http://api.weather.com/today
+API must be documented so developers know:
+What endpoints exist?
+What data to sent?
+What data they will receive?
+OpenAPI:
+A standard for describing REST APIs. It is a blueprint for an API and written in YML or JSON.
+It describes:
+API routes/endpoints
+Input requirements
+Ouput responses
+Authentication
+Data models(schemas)
+Example OpenAPI snippest:
+paths:
+     /users:
+          get: 
+               summary: Get all users
+               responses:
+                      200:
+                           description: success
+Swagger: 
+Swagger is a widely used open-source framework built around the OpenAPI Specification(OAS) that helps developers design, build, document, and consume RESTful APIs. 
+Swagger includes tools like:
+Swagger Editor: write OpenAPI documentation online
+Swagger UI: shows your API as a beautiful interactive web page. Developers can test endpoints right there.
+Swagger codegen: generates server & client code automatically.
+OpenAPI File contain:
+1.Info Section
+Basic details about API
+info: 
+title: Student API
+version: 1.0.0
+
+2.path section:
+Endpoints/routes
+ paths:
+       /students:
+         get:
+                summary: Get all students
+3.Components section(Schemas/Models)
+Describe data structures
+Components: 
+        Schemas:
+             Student:
+                  Type: object
+               Properties:
+                     Id:
+                       Type: integer
+                    Name: 
+                      Type: string
