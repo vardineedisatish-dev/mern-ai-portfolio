@@ -1,0 +1,65 @@
+Integration Testing:
+Integration testing verifies that multiple parts of your system work together-e.g.  Express routes+ middleware+ controllers + DB + auth – by exercising real HTTP requests through your app.
+Why it matters:
+Catches issues unit tests miss (routing, validation, serialization, middleware order, DB writing).
+Increase confidence that API behaves correctly for consumers (web/mobile/other services).
+Helps prevent regressions across modules.
+Difference:
+Unit tests: test functions/classes in isolation (fast, narrow).
+Integration tests: test a slice of the app with real components wired.
+E2E tests: test the entire system as a black box ( often involves browser/UI, real infra).
+
+Supertest :
+Supertest is a node.js library that lets you send HTTP-like requests to your Express/Koa/Fastify app without manually starting a server.
+Key benefits:
+No app.listen required.
+Simple API:  .get() .post() .send() .query() .set() .expect()
+Works with jest, Mocha, Vitest, or any test runner.
+Perfect for testing request/response pipeline.
+Tooling & setup:
+Install(with jest)
+npm i –D supertest jest
+Export the Express app(critical):
+// app.js
+const express =require(‘express’);
+const app=express();
+app.use(express.json());
+app.get(‘/health’, (req,res)=> res.status(200).json({ok :true}));
+module.exports = { app};
+// server.js
+const {app} =require(‘./app’);
+const PORT =process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`API on : ${PORT}`));
+A minimal Jest config
+
+
+
+// package.json
+{
+ “scripts”: {
+  "test": "jest --runInBand",
+    "test:watch": "jest --watch",
+    "test:cov": "jest --coverage"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": ["**/*.test.js"]
+}
+}
+First integration test with supertest:
+//health.test.js
+
+const request =require(‘supertest’);
+const { app } =require(‘./app’);
+
+describe(‘GET/health’, () =>{
+it (‘returns ok true’, async () => {
+       const res = await request(app).get(‘/health’);
+
+expect(res.status).toBe(200);
+expect(res.body).toEqual({ok : true});
+});
+});
+
+Run: 
+       npm test
