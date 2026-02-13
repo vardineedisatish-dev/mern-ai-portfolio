@@ -1,7 +1,9 @@
 Structured errors:
+
 Structured error mean representing errors in a consistent, machine-readable, predictable format instead of plain text.
 A normal(unstructured) error look as:
 Something went wrong!
+
 A structured error looks like:
 {
 “error” : “UserNotFound”
@@ -10,6 +12,8 @@ A structured error looks like:
 “timestamp”: “2026-01-28T10:00:00.000Z”,
 “path”: “/users/42”
 }
+
+
 Structured error contains:
 Error – A short code like UserNotFound,ValidationError
 Message – Human- readable explanation
