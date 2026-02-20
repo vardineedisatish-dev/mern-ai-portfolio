@@ -1,5 +1,6 @@
 function createCounter(){
     let count=0;
+    
     return{
          increment : function(){
             count++;       
